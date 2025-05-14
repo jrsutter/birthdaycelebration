@@ -1,27 +1,17 @@
-// Function to create confetti animation
-function createConfetti() {
-    const confettiContainer = document.getElementById('confetti');
+function createBalloons() {
+    const container = document.getElementById('balloons');
+    const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink'];
 
-    // Create 225 confetti pieces
-    for (let i = 0; i < 225; i++) {
-        const confettiPiece = document.createElement('div');
-        confettiPiece.classList.add('confetti-piece');
-
-        // Randomize size, position, and color
-        const size = Math.random() * (18 - 5) + 5;
-        confettiPiece.style.width = `${size}px`;
-        confettiPiece.style.height = `${size}px`;
-
-        const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'cyan'];
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        confettiPiece.style.backgroundColor = randomColor;
-
-        confettiPiece.style.left = `${Math.random() * window.innerWidth}px`;
-        confettiPiece.style.animationDelay = `${Math.random() * 3}s`;
-
-        confettiContainer.appendChild(confettiPiece);
+    for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        balloon.style.left = `${Math.random() * 100}vw`;
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(balloon);
     }
 }
+
 
 // Function to read and parse CSV file and display birthdays
 function loadBirthdays() {
