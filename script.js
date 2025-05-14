@@ -1,3 +1,4 @@
+// Function to create animated balloons
 function createBalloons() {
     const container = document.getElementById('balloons');
     const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink'];
@@ -12,10 +13,18 @@ function createBalloons() {
     }
 }
 
+// Function to show a birthday banner
+function showBirthdayBanner(birthdayList) {
+    const banner = document.getElementById('birthday-banner');
+    if (birthdayList.length > 0) {
+        const nameList = birthdayList.map(b => b.first_name).join(', ');
+        banner.innerText = `🎉 Happy Birthday ${nameList}! 🎉`;
+    }
+}
 
 // Function to read and parse CSV file and display birthdays
 function loadBirthdays() {
-    const filePath = 'birthdays.csv'; // CSV file path
+    const filePath = 'birthdays.csv';
 
     Papa.parse(filePath, {
         download: true,
@@ -27,10 +36,10 @@ function loadBirthdays() {
             const upcomingBirthday = [];
 
             const today = new Date();
-            today.setHours(0, 0, 0, 0); // Normalize time for accurate date comparison
+            today.setHours(0, 0, 0, 0); // Normalize time
 
             birthdays.forEach(birthday => {
-                if (!birthday.birthdate) return; // Skip empty rows
+                if (!birthday.birthdate) return;
 
                 const birthDate = new Date(birthday.birthdate);
                 const birthdayThisYear = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
@@ -49,9 +58,10 @@ function loadBirthdays() {
 
             displayBirthdays(currentBirthday, pastBirthday, upcomingBirthday);
 
-            // Only show confetti if there's a birthday in range
-            if (currentBirthday.length || pastBirthday.length || upcomingBirthday.length) {
-                createConfetti();
+            const allBirthdays = [...currentBirthday, ...pastBirthday, ...upcomingBirthday];
+            if (allBirthdays.length > 0) {
+                showBirthdayBanner(allBirthdays);
+                createBalloons();
             }
         }
     });
@@ -85,7 +95,6 @@ function refreshAtMidnight() {
     const now = new Date();
     const midnight = new Date();
     midnight.setHours(24, 0, 0, 0);
-
     const timeUntilMidnight = midnight - now;
 
     setTimeout(() => {
@@ -93,7 +102,7 @@ function refreshAtMidnight() {
     }, timeUntilMidnight);
 }
 
-// Initialize everything on page load
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadBirthdays();
     refreshAtMidnight();
